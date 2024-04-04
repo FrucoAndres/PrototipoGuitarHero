@@ -15,36 +15,66 @@ const circulovg4 = document.getElementById('chg4');
 
 let puntaje = 0;
 
+let juegoEnPausa = false;
+
+function pausarJuego() {
+    juegoEnPausa = true;
+    habilitarReanudar();
+
+}
+
+function iniciarJuego() {
+    // Reiniciar puntaje
+    puntaje = 0;
+    actualizarPuntaje();
+
+    // Reiniciar posición de los círculos
+    circulo1.style.transform = 'translateY(0px)';
+    circulo2.style.transform = 'translateY(0px)';
+    circulo3.style.transform = 'translateY(0px)';
+    circulo4.style.transform = 'translateY(0px)';
+
+    habilitarPausar();
+    // Reanudar juego
+    reanudarJuego();
+}
+function reanudarJuego() {
+    juegoEnPausa = false;
+    // Reanuda la animación de los círculos
+    moverCirculoVerticalmente(circulo1);
+    moverCirculoVerticalmente(circulo2);
+    moverCirculoVerticalmente(circulo3);
+    moverCirculoVerticalmente(circulo4);
+
+    habilitarPausarDesdeReanudar();
+}
+
 // Función para mover un círculo verticalmente
 function moverCirculoVerticalmente(circulo) {
     const velocidad = Math.random() * 4 + 1; // Velocidad aleatoria entre 1 y 3 (ajusta según tus preferencias)
     let posicionY = 0;
 
     function animar() {
-        posicionY += velocidad;
-        circulo.style.transform = `translateY(${posicionY}px)`;
-
-        // Si llega a cierto límite, reinicia la posición
-
-        if (posicionY >= 720) {
-            posicionY = -200;
-
-            setTimeout(animar, Math.random() * 1600); // Espera un tiempo aleatorio antes de reaparecer
+        if (!juegoEnPausa) {
+            posicionY += velocidad;
+            circulo.style.transform = `translateY(${posicionY}px)`;
+    
+            if (posicionY >= 720) {
+                posicionY = -200;
+                setTimeout(animar, Math.random() * 1600);
+            } else {
+                requestAnimationFrame(animar);
+            }
+            console.log(puntaje);
         } else {
-            requestAnimationFrame(animar);
+            // Si el juego está en pausa, no se continúa la animación
+            console.log("Juego en pausa");
         }
-        console.log(puntaje)
     }
 
     animar();
-
+    
 }
-
-// Llama a la función para cada círculo
-moverCirculoVerticalmente(circulo1);
-moverCirculoVerticalmente(circulo2);
-moverCirculoVerticalmente(circulo3);
-moverCirculoVerticalmente(circulo4);
 
 // Variable para rastrear si las teclas están presionadas
 let teclaAPresionada = false;
@@ -75,6 +105,9 @@ function cambiarColorCirculo(circulo, circuloVacio, circuloVacioGrande, posYMin,
 
         // Asignar el color del borde correspondiente al color del círculo principal
         circuloVacioGrande.style.backgroundColor = color;
+        // Reproducir sonido cuando se presiona la tecla 'a'
+        const audioA = new Audio('pop.mp3');
+        audioA.play();
 
         puntaje++;
         actualizarPuntaje();
@@ -125,3 +158,21 @@ document.addEventListener('keyup', (event) => {
         teclaFPresionada = false;
     }
 });
+
+// Función para habilitar el botón "Pausar Juego" y deshabilitar el botón "Iniciar Juego"
+function habilitarPausar() {
+    document.getElementById('btnPausar').disabled = false;
+}
+
+// Función para habilitar el botón "Reanudar Juego" y deshabilitar el botón "Pausar Juego"
+function habilitarReanudar() {
+    document.getElementById('btnReanudar').disabled = false;
+    document.getElementById('btnPausar').disabled = true;
+}
+
+// Función para habilitar el botón "Pausar Juego" y deshabilitar el botón "Reanudar Juego"
+function habilitarPausarDesdeReanudar() {
+    document.getElementById('btnPausar').disabled = false;
+    document.getElementById('btnReanudar').disabled = true;
+}
+

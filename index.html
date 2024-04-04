@@ -10,6 +10,13 @@
 <body>
 
     <div class="container">
+        <div class="botones-box">
+            <button id="btnIniciar" onclick="iniciarJuego()">Iniciar Juego</button>
+            <button id="btnPausar" onclick="pausarJuego()" disabled>Pausar Juego</button>
+            <button id="btnReanudar" onclick="reanudarJuego()" disabled>Reanudar Juego</button>
+        </div>
+    </div>
+    <div class="container">
         <div class="puntaje-box">
             <h2>Puntaje</h2>
             <span id="puntaje">0</span>
@@ -20,7 +27,7 @@
         <div class="caja-imagen">
             <img src="https://usagif.com/wp-content/uploads/gifs/banana-103.gif" alt="Banana_Rock">
         </div>
-        
+
     </div>
 
     <div class="g1">
@@ -50,15 +57,15 @@
     </div>
 
     <div class="g2">
-        <div class="recuadrofinal" >
+        <div class="recuadrofinal">
             <div class="circulo circulo-hueco" id="cv1"></div>
             <div class="circulo-hueco-grande" id="chg1"></div>
         </div>
-        <div class="recuadrofinal" >
+        <div class="recuadrofinal">
             <div class="circulo circulo-hueco" id="cv2"></div>
             <div class="circulo-hueco-grande" id="chg2"></div>
         </div>
-        <div class="recuadrofinal" >
+        <div class="recuadrofinal">
             <div class="circulo circulo-hueco" id="cv3"></div>
             <div class="circulo-hueco-grande" id="chg3"></div>
         </div>
@@ -68,7 +75,7 @@
         </div>
     </div>
 
-    
+
 
     <script src="main.js"></script>
 </body>
